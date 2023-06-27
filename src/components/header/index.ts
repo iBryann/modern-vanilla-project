@@ -1,6 +1,6 @@
 import { html, render } from 'lit';
 
-const headTag = document.head;
+const headTag = document.head || document.createElement('head');
 const template = html`
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -9,3 +9,9 @@ const template = html`
 `;
 
 render(template, headTag);
+
+if (!document.head) {
+  const { body, documentElement } = document;
+
+  render(headTag, documentElement, { renderBefore: body });
+}
